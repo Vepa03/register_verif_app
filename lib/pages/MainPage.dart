@@ -16,7 +16,8 @@ class _MainpageState extends State<Mainpage> {
         backgroundColor: Colors.amber,
       ),
       body: Center(
-        child: Text("Home"),
+        child: ElevatedButton(onPressed: (){
+        }, child: Text("Profil")),
       ),
     );
   }
