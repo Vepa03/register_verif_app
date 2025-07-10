@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:login_verif/pages/LoginPage.dart';
 import 'package:login_verif/pages/otp.dart';
 
 class HomePage extends StatefulWidget {
@@ -71,6 +72,12 @@ class _HomePageState extends State<HomePage> {
                 hintStyle: TextStyle(fontSize: 20, color: Colors.grey),
               ),
             ),
+            SizedBox(height: 10),
+            GestureDetector(
+              onTap: (){
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Loginpage()));
+              },
+              child: Text("Already registered click")),
             SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
