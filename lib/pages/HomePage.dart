@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(fontSize: width*0.04, color: Colors.black),
                   children: [
                     TextSpan(
-                      text: 'Click',
+                      text: 'Click here',
                       style: TextStyle(
                         fontSize: width*0.04,
                         fontWeight: FontWeight.bold,

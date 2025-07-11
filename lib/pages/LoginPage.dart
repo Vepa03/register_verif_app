@@ -1,7 +1,9 @@
 import 'dart:convert' show jsonEncode, jsonDecode;
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:login_verif/pages/HomePage.dart';
 import 'package:login_verif/pages/MainPage.dart' show Mainpage;
 
 class Loginpage extends StatefulWidget {
@@ -56,29 +58,101 @@ class _LoginpageState extends State<Loginpage> {
   }
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+
+    final _formKey = GlobalKey<FormState>();
     return Scaffold(
+      appBar: AppBar(
+      ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Login page"),
-            TextField(
-              controller: MailController,
-              decoration: InputDecoration(
-                hint: Text("Write your mail")
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Login page", style: TextStyle(fontSize: width*0.06, color: Colors.black, fontWeight: FontWeight.bold),),
+              TextFormField(
+                controller: MailController,
+                decoration: InputDecoration(
+                  prefix: Padding(
+                    padding: const EdgeInsets.only(right: 10.0, left: 10.0),
+                    child: Icon(Icons.mail),
+                  ),
+                  label: Text("Enter your Mail",),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  )
+                ),
+                validator: (value){
+                  if (value == null || value.isEmpty) {
+                    return "Mail is required";
+                  }
+                  return null;
+                },
               ),
-            ),
-            TextField(
-              controller: PasswordController,
-              decoration: InputDecoration(
-                hint: Text("Write your password")
+              SizedBox(height:10),
+              TextFormField(
+                controller: PasswordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  prefix: Padding(
+                    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                    child: Icon(Icons.key),
+                  ),
+                  label: Text("Enter your Password"),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  )
+                ),
+                validator: (value){
+                  if (value == null || value.isEmpty) {
+                    return "Password is required";
+                  }
+                  return null;
+                },
+          
               ),
-            ),
-            ElevatedButton(onPressed: (){
-              login_verif();
-            }, child: Text("Login"))
-          ],
+              Text.rich(
+                TextSpan(
+                  text: "Don't have an account? ",
+                  style: TextStyle(fontSize: width*0.04, color: Colors.black),
+                  children: [
+                    TextSpan(
+                      text: 'Click here',
+                      style: TextStyle(
+                        fontSize: width*0.04,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        decoration: TextDecoration.underline,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => HomePage()),
+                          );
+                        },
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 10,),
+              SizedBox(
+                width: width,
+                height: height*0.05,
+                child: ElevatedButton(onPressed: (){
+                  if(_formKey.currentState!.validate()){
+                      login_verif(); 
+                    }
+                }, child: Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: width*0.05)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black
+                ),)
+              ),
+            ],
+          ),
         ),
       ),
     );
