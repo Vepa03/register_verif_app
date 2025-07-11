@@ -63,8 +63,6 @@ class _LoginpageState extends State<Loginpage> {
 
     final _formKey = GlobalKey<FormState>();
     return Scaffold(
-      appBar: AppBar(
-      ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Form(
@@ -72,7 +70,8 @@ class _LoginpageState extends State<Loginpage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Login page", style: TextStyle(fontSize: width*0.06, color: Colors.black, fontWeight: FontWeight.bold),),
+              Text("Login to Kitap", style: TextStyle(fontSize: width*0.07, color: Colors.black, fontWeight: FontWeight.bold),),
+              SizedBox(height: 10.0,),
               TextFormField(
                 controller: MailController,
                 decoration: InputDecoration(
@@ -114,6 +113,7 @@ class _LoginpageState extends State<Loginpage> {
                 },
           
               ),
+              SizedBox(height: 10.0),
               Text.rich(
                 TextSpan(
                   text: "Don't have an account? ",
@@ -146,7 +146,7 @@ class _LoginpageState extends State<Loginpage> {
                   if(_formKey.currentState!.validate()){
                       login_verif(); 
                     }
-                }, child: Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: width*0.05)),
+                }, child: Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: width*0.06)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black
                 ),)

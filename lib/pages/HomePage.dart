@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Welcome to Kitaplar', style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold)),
+              Text('Register to Kitap', style: TextStyle(fontSize: width*0.07, color: Colors.black, fontWeight: FontWeight.bold)),
               SizedBox(height: 10),
               TextFormField(
                 style: TextStyle(fontSize: 20, color: Colors.black),
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 validator: (value){
                   if (value == null || value.isEmpty){
-                    return "Enter your mail";
+                    return "Mail is required";
                   }
                   return null;
                 },
@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 validator: (value){
                   if (value == null || value.isEmpty){
-                    return "Enter your mail";
+                    return "Password is required";
                   }
                   return null;
                 },
@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
               Text.rich(
                 TextSpan(
                   text: 'Already registered? ',
-                  style: TextStyle(fontSize: width*0.04, color: Colors.black),
+                  style: TextStyle(fontSize: width*0.04, color: Colors.black, fontWeight: FontWeight.w300),
                   children: [
                     TextSpan(
                       text: 'Click here',
@@ -137,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                       registerUser(); 
                     }
                   },
-                  child: Text("Register", style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold)),
+                  child: Text("Register", style: TextStyle(fontSize: width*0.06, color: Colors.white, fontWeight: FontWeight.bold)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black
                   )

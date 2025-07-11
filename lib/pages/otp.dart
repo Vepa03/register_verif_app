@@ -49,24 +49,58 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    final _formKey = GlobalKey<FormState>();
     return Scaffold(
-      appBar: AppBar(title: const Text("Verify OTP")),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Enter OTP sent to ${widget.email}"),
-            TextField(
-              controller: otpController,
-              decoration: const InputDecoration(hintText: "OTP"),
-              keyboardType: TextInputType.number,
-            ),
-            ElevatedButton(
-              onPressed: verifyOtp,
-              child: const Text("Verify"),
-            ),
-          ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Enter OTP sent to ${widget.email}", style: TextStyle(fontSize: width*0.06, color: Colors.black, fontWeight: FontWeight.bold),),
+              TextFormField(
+                controller: otpController,
+                validator: (value){
+                  if (value == null || value.isEmpty) {
+                    return "OTP code is required";
+                  } 
+                    return null;
+                },
+                decoration: InputDecoration(
+                  prefix: Padding(
+                    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                    child: Icon(Icons.key),
+                  ),
+                  label: Text("OTP code"),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  )
+                ),
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(height: 10.0,),
+              SizedBox(
+                width: width,
+                height: height*0.05,
+                child: ElevatedButton(
+                  onPressed: (){
+                    if(_formKey.currentState!.validate()){
+                      verifyOtp(); 
+                    }
+                  },
+                  child: Text("Verify", style: TextStyle(color: Colors.white, fontSize: width*0.06),),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black
+                  ),
+                ),
+              ),
+              
+            ],
+          ),
         ),
       ),
     );
