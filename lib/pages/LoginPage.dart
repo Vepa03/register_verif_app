@@ -16,7 +16,7 @@ class _LoginpageState extends State<Loginpage> {
   TextEditingController PasswordController = TextEditingController();
 
   Future<void> login_verif() async {
-    final url = Uri.parse('http://192.168.100.33:8000/login/');
+    final url = Uri.parse('http://172.22.56.52:8000/login/');
     final response = await http.post(
     url,
     headers: {

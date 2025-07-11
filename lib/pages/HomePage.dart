@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:login_verif/pages/LoginPage.dart';
+import 'package:flutter/gestures.dart';
 import 'package:login_verif/pages/otp.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   TextEditingController PasswordController = TextEditingController();
 
   Future<void> registerUser() async {
-    final url = Uri.parse('http://192.168.100.33:8000/register/');
+    final url = Uri.parse('http://172.22.56.52:8000/register/');
 
     final response = await http.post(
       url,
@@ -44,48 +45,106 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+
+    final _formKey = GlobalKey<FormState>();
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Fill Your Name', style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
-            TextField(
-              style: TextStyle(fontSize: 20, color: Colors.black),
-              controller: MailController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter your mail',
-                hintStyle: TextStyle(fontSize: 20, color: Colors.grey),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Welcome to Kitaplar', style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold)),
+              SizedBox(height: 10),
+              TextFormField(
+                style: TextStyle(fontSize: 20, color: Colors.black),
+                controller: MailController,
+                decoration: InputDecoration(
+                  label: Text("Enter your mail"),
+                  prefix: Padding(
+                    padding: const EdgeInsets.only(right: 10.0, left: 10.0),
+                    child: Icon(Icons.mail),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                ),
+                validator: (value){
+                  if (value == null || value.isEmpty){
+                    return "Enter your mail";
+                  }
+                  return null;
+                },
               ),
-            ),
-            SizedBox(height: 10),
-            TextField(
-              style: TextStyle(fontSize: 20, color: Colors.black),
-              controller: PasswordController,
-              obscureText: true,  // 🔒 Şifre gizli olsun
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter your password',
-                hintStyle: TextStyle(fontSize: 20, color: Colors.grey),
+              SizedBox(height: 10),
+              TextFormField(
+                style: TextStyle(fontSize: 20, color: Colors.black),
+                controller: PasswordController,
+                obscureText: true, 
+                decoration: InputDecoration(
+                  label: Text("Enter your password"),
+                  prefix: Padding(
+                    padding: const EdgeInsets.only(right: 10.0, left: 10.0),
+                    child: Icon(Icons.key),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                ),
+                validator: (value){
+                  if (value == null || value.isEmpty){
+                    return "Enter your mail";
+                  }
+                  return null;
+                },
               ),
-            ),
-            SizedBox(height: 10),
-            GestureDetector(
-              onTap: (){
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Loginpage()));
-              },
-              child: Text("Already registered click")),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                registerUser();  // 🔔 Register butonu artık çalışıyor
-              },
-              child: Text("Register", style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold)),
-            ),
-          ],
+              SizedBox(height: 10),
+              Text.rich(
+                TextSpan(
+                  text: 'Already registered? ',
+                  style: TextStyle(fontSize: width*0.04, color: Colors.black),
+                  children: [
+                    TextSpan(
+                      text: 'Click',
+                      style: TextStyle(
+                        fontSize: width*0.04,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        decoration: TextDecoration.underline,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Loginpage()),
+                          );
+                        },
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 10),
+              SizedBox(
+                width: width,
+                height: height*0.05,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if(_formKey.currentState!.validate()){
+                      registerUser(); 
+                    }
+                  },
+                  child: Text("Register", style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold)),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black
+                  )
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -16,7 +16,7 @@ class _OtpScreenState extends State<OtpScreen> {
   TextEditingController otpController = TextEditingController();
 
   Future<void> verifyOtp() async {
-  final url = Uri.parse('http://192.168.100.33:8000/verify/');
+  final url = Uri.parse('http://172.22.56.52:8000/verify/');
 
   final response = await http.post(
     url,
