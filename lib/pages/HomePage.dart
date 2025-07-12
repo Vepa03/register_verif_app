@@ -39,12 +39,18 @@ class _HomePageState extends State<HomePage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('You are already registered with this email.')),
       );
+    } if (response.statusCode == 400 ) {
+      print('Email could not be sent. Please enter a valid email address.');
+      print('Response: ${response.body}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Email could not be sent. Please enter a valid email address.')),
+      );
     } if (response.statusCode == 200 || response.statusCode == 201) {
       print('✅ Registration successful!');
       print('Response: ${response.body}');
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> OtpScreen(email: MailController.text.trim())));
       // Örneğin: OTP ekranına geçiş
-    } else {
+    }else {
       print('❌ Registration failed.');
       print('Status: ${response.statusCode}');
       print('Body: ${response.body}');

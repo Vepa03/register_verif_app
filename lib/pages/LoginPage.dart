@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:login_verif/pages/HomePage.dart';
 import 'package:login_verif/pages/MainPage.dart' show Mainpage;
+import 'package:login_verif/pages/otp.dart';
 import 'package:lottie/lottie.dart';
 
 class Loginpage extends StatefulWidget {
@@ -38,24 +39,27 @@ class _LoginpageState extends State<Loginpage> {
     // Status kodu kontrol etmek yerine mesajı kontrol et
     if (responseBody['message'] == 'Login successful') {
       print('✅ Login succesfully');
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Mainpage()),
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Mainpage()),
       );
-    } if (responseBody['message'] == 'User not found') {
+    }else if (responseBody['message'] == 'User not found') {
       print('User not found');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('User not found')),
       );
-    } if (responseBody['message'] == 'Account not verified') {
+    }else if (responseBody['message'] == 'Account not verified') {
       print(' Account not verified');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Account not verified')),
       );
-    } if (responseBody['message'] == 'Invalid password') {
+    }else if (responseBody['message'] == 'Invalid password') {
       print('Invalid password');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Invalid password')),
+      );
+    } else {
+      print('Unhandled response: ${responseBody['message']}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Unexpected error occurred')),
       );
     }
   }
@@ -155,6 +159,30 @@ class _LoginpageState extends State<Loginpage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => HomePage()),
+                              );
+                            },
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10.0),
+                  Text.rich(
+                    TextSpan(
+                      text: "If your account not verified ",
+                      style: TextStyle(fontSize: width*0.04, color: Colors.black),
+                      children: [
+                        TextSpan(
+                          text: 'Click here',
+                          style: TextStyle(
+                            fontSize: width*0.04,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => OtpScreen(email: MailController.text.trim(),)),
                               );
                             },
                         ),
