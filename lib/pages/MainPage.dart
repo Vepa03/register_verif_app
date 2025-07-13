@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:login_verif/model/category_model.dart' show category;
+import 'package:login_verif/pages/AdminPage.dart';
 
 class Mainpage extends StatefulWidget {
   const Mainpage({super.key});
@@ -54,7 +55,11 @@ class _MainPageState extends State<Mainpage> with TickerProviderStateMixin {
               actions: [
                 Padding(
                   padding: const EdgeInsets.all(15.0),
-                  child: Icon(Icons.person_outline),
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminPage()));
+                    },
+                    child: Icon(Icons.person_outline)),
                 )
               ],
               automaticallyImplyLeading: false,
